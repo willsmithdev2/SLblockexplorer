@@ -1,12 +1,11 @@
 'use strict';
 
-angular.module('blockexplorer', ['ngRoute', "blockexplorer.blocktable"]).
+angular.module('blockExplorer', ['ngRoute', "blockTable"]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/blocktable', {
     templateUrl: 'blocktable/view.html',
     controller: 'BlockTableController',
-    controllerAs:"blocktable/blockTableCtrl"
-
+    controllerAs:"blockTableCtrl"
   })
   $routeProvider.otherwise({redirectTo: '/blocktable'});
 }]);
