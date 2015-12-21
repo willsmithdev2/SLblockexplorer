@@ -1,10 +1,12 @@
 'use strict';
 
-angular.module('myApp', ['ngRoute']).
+angular.module('blockexplorer', ['ngRoute', "blockexplorer.blocktable"]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/blockchain', {
-    templateUrl: 'blocktable/blocktable.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/blocktable', {
+    templateUrl: 'blocktable/view.html',
+    controller: 'BlockTableController',
+    controllerAs:"blocktable/blockTableCtrl"
+
   })
-  $routeProvider.otherwise({redirectTo: '/blockchain'});
+  $routeProvider.otherwise({redirectTo: '/blocktable'});
 }]);
