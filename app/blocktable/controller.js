@@ -10,8 +10,8 @@ angular.module("blockTable", ["ngRoute"])
       controller.latestBlock = data;
     });
 
-    this.generateBlockChain= function(block){
+    $http.get('resources/fakeBlockChain.json').success(function(data) {
+      controller.blockChain = data;
+    });
 
-
-    };
   });

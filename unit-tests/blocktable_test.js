@@ -35,10 +35,30 @@ describe('blockTable module', function() {
       expect(ctrl).toBeDefined();
     });
 
-    it('should store the latestBlock info when instantiated', function() {
-      expect(ctrl.latestBlock).toBeUndefined();
+    // it('should store the latestBlock info when instantiated', function() {
+    //   expect(ctrl.latestBlock).toBeUndefined();
+    //   $httpBackend.flush();
+    //   expect(ctrl.latestBlock).toEqual(latestBlockJson)
+    // });
+
+    it('blockChain should store an array of block information', function() {
+      expect(ctrl.blockChain).toBeUndefined();
+      var fakeChain={"blockChain": [{
+        "hash":"000000000000000006a8961c438339d28db630515ec7da0bfc62327f3dc6f314",
+        "time":1422349800,
+        "height":5454356
+        },
+        {
+          "hash":"000000000000000006a8961c438339d28db630515ec7da0bfc62325645645",
+          "time":1444388800,
+          "height":12478066
+        }]};
+      $httpBackend.expectGET('resources/fakeBlockChain.json').
+          respond(fakeChain);
+
       $httpBackend.flush();
-      expect(ctrl.latestBlock).toEqual(latestBlockJson)
+
+      expect(ctrl.blockChain).toEqual(fakeChain)
     });
 
   });
