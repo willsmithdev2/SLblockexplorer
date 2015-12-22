@@ -57,8 +57,8 @@ describe('blockTable module', function() {
           respond(fakeChain);
 
       $httpBackend.flush();
-
-      expect(ctrl.blockChain).toEqual(fakeChain)
+      fakeChain.blockChain.reverse();
+      expect(ctrl.blockChain).toEqual(fakeChain);
     });
 
   });

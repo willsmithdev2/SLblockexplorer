@@ -13,8 +13,6 @@
 
   <body>
 
-    <p>Here is the JSON : {{blockTableCtrl.blocks}}</p>
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -26,21 +24,13 @@
                   <th>Timestamp</th>
                   <th>Hash</th>
                   <th>Height</th>
-                  <th>Header</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
+                <tr ng-repeat="block in blockTableCtrl.blockChain.blockChain| limitTo: 10">
+                  <td>{{block.time | date:"dd/mm/yyyy HH:mm:ss" }}</td>
+                  <td>{{block.hash}}</td>
+                  <td>{{block.height}}</td>
                 </tr>
               </tbody>
             </table>

@@ -12,6 +12,7 @@ angular.module("blockTable", ["ngRoute"])
 
     $http.get('resources/fakeBlockChain.json').success(function(data) {
       controller.blockChain = data;
+      controller.blockChain.blockChain.reverse();
     });
 
   });
