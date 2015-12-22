@@ -29,7 +29,7 @@
               <tbody>
                 <tr ng-repeat="block in blockTableCtrl.blockChain.blockChain| filter:query | limitTo: 10">
                   <td>{{block.time | date:"dd/mm/yyyy HH:mm:ss" }}</td>
-                  <td>{{block.hash}}</td>
+                  <td><a href="#/blocktable/detail/{{block.hash}}"> {{block.hash}}</a></td>
                   <td>{{block.height}}</td>
                 </tr>
               </tbody>

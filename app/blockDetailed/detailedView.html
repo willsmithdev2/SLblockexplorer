@@ -14,5 +14,47 @@
   <body>
 
 
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1>Summary</h1>
+          <table class="table" style="table-layout: fixed">
+            <tbody>
+            <tr>
+            <td><strong translate=""><span class="ng-scope">Number Of Transactions</span></strong></td>
+              <td class="text-right text-muted ng-binding">{{detailedCtrl.currentBlock.tx.length}}</td>
+            </tr>
+            <tr>
+              <td><strong translate=""><span class="ng-scope">Height</span></strong></td>
+              <td class="text-right text-muted ng-binding">{{detailedCtrl.currentBlock.height}}
+              </td>
+            </tr>
+            <tr>
+              <td><strong translate=""><span class="ng-scope">Timestamp</span></strong></td>
+              <td class="text-right text-muted ng-binding">{{detailedCtrl.currentBlock.time | date:"dd/mm/yyyy HH:mm:ss"}}</td>
+            </tr>
+            <tr>
+              <td><strong>Merkle Root</strong></td>
+                <td class="text-right text-muted">
+                  <span>{{detailedCtrl.currentBlock.merkleroot}}</span>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+
+            <h2>Transactions</h2>
+
+            <table ng-repeat="tx in detailedCtrl.currentBlock.tx" class="table" style="table-layout: fixed">
+              <tbody>
+              <tr>
+                <td class="text-left text-muted ng-binding">{{tx}}</td>
+              </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+
   </body>
 </html>
