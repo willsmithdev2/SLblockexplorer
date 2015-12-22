@@ -1,23 +1,21 @@
 'use strict';
 
-describe('blockTable module', function() {
+var fakeChain={"blockChain": [{
+  "hash":"000000000000000006a8961c438339d28db630515ec7da0bfc62327f3dc6f314",
+  "time":1422349800,
+  "height":5454356
+  },
+  {
+    "hash":"000000000000000006a8961c438339d28db630515ec7da0bfc62325645645",
+    "time":1444388800,
+    "height":12478066
+  }]};
 
-  var latestBlockJson={"hash":"000000000000000006a8961c438339d28db630515ec7da0bfc62327f3dc6f314",
-    "confirmations":11440,
-    "size":3182,
-    "height":378066,
-    "version":3,
-    "merkleroot":"d3f0e717a577ae8139c7e3261da26f3dc66a618bd4661e03b9860cb738b55806",
-    "tx":[],
-      "time":1444349800,
-      "nonce":1438955897,
-      "bits":"18121472",
-      "difficulty":60813224039.440346,
-      "chainwork":"0000000000000000000000000000000000000000000aeb55a866a589db70f122",
-      "previousblockhash":"00000000000000000a5093e24e1f43c509e2cd51dd3ec38c739a92de83665b5a",
-      "nextblockhash":"00000000000000000ef9af22be9e30034d259e9189319350b0bcfd5df42d6bd1",
-      "reward":25,
-      "isMainChain":true}
+var latestBlockInfo= {"syncTipHash":"0000000000000000040fbb7c8bf00ea03aee212db5b844bbe9272b468c796618",
+"lastblockhash":"0000000000000000040fbb7c8bf00ea03aee212db5b844bbe9272b468c796618"}
+
+
+describe('blockTable module', function() {
 
   beforeEach(module('blockTable'));
 
@@ -25,9 +23,8 @@ describe('blockTable module', function() {
     var  ctrl , $httpBackend;
     beforeEach(inject(function(_$httpBackend_, $controller) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('resources/latest-block.json').
-          respond(latestBlockJson);
-
+      $httpBackend.when('GET',"https://blockexplorer.com/api/status?q=getLastBlockHash").respond(latestBlockInfo);
+      $httpBackend.when('GET', 'resources/fakeBlockChain.json').respond(fakeChain);
       ctrl = $controller('BlockTableController');
     }));
 
@@ -35,27 +32,14 @@ describe('blockTable module', function() {
       expect(ctrl).toBeDefined();
     });
 
-    // it('should store the latestBlock info when instantiated', function() {
-    //   expect(ctrl.latestBlock).toBeUndefined();
-    //   $httpBackend.flush();
-    //   expect(ctrl.latestBlock).toEqual(latestBlockJson)
-    // });
+    it('should store the latestBlock info when instantiated', function() {
+      expect(ctrl.latestBlock).toBeUndefined();
+      $httpBackend.flush();
+      expect(ctrl.latestBlock).toEqual("0000000000000000040fbb7c8bf00ea03aee212db5b844bbe9272b468c796618")
+    });
 
     it('blockChain should store an array of block information', function() {
       expect(ctrl.blockChain).toBeUndefined();
-      var fakeChain={"blockChain": [{
-        "hash":"000000000000000006a8961c438339d28db630515ec7da0bfc62327f3dc6f314",
-        "time":1422349800,
-        "height":5454356
-        },
-        {
-          "hash":"000000000000000006a8961c438339d28db630515ec7da0bfc62325645645",
-          "time":1444388800,
-          "height":12478066
-        }]};
-      $httpBackend.expectGET('resources/fakeBlockChain.json').
-          respond(fakeChain);
-
       $httpBackend.flush();
       fakeChain.blockChain.reverse();
       expect(ctrl.blockChain).toEqual(fakeChain);
