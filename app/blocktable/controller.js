@@ -6,6 +6,8 @@ angular.module("blockTable", ["ngRoute"])
     var controller=this;
     controller.latestBlockHash;
     controller.blockChain=[];
+    controller.startingIndex=0;
+    controller.endingIndex=controller.startingIndex+9;
 
     $http.get('https://blockexplorer.com/api/status?q=getLastBlockHash').success(function(data) {
       controller.latestBlockHash = data.lastblockhash;

@@ -68,17 +68,17 @@ describe('blockTable module', function() {
         {
             "hash":"111",
             "height":111,
-            "time":111
+            "time":'01/01/1970 12:01AM'
         },
         {
             "hash":"222",
             "height":222,
-            "time":222
+            "time":'01/01/1970 12:03AM'
         },
         {
             "hash":"333",
             "height":333,
-            "time":333
+            "time":'01/01/1970 12:05AM'
         }
         ]
       )
