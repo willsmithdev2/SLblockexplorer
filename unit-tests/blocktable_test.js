@@ -12,7 +12,24 @@ var fakeChain={"blockChain": [{
   }]};
 
 var latestBlockInfo= {"syncTipHash":"0000000000000000040fbb7c8bf00ea03aee212db5b844bbe9272b468c796618",
-"lastblockhash":"0000000000000000040fbb7c8bf00ea03aee212db5b844bbe9272b468c796618"}
+"lastblockhash":"111"}
+
+var fakeBlock1={"hash":"111",
+  "height":111,
+  "time":111,
+  "previousblockhash":"222"
+  }
+
+var fakeBlock2={"hash":"222",
+    "height":222,
+    "time":222,
+    "previousblockhash":"333"
+}
+
+var fakeBlock3={"hash":"333",
+      "height":333,
+      "time":333
+  }
 
 
 describe('blockTable module', function() {
@@ -25,6 +42,10 @@ describe('blockTable module', function() {
       $httpBackend = _$httpBackend_;
       $httpBackend.when('GET',"https://blockexplorer.com/api/status?q=getLastBlockHash").respond(latestBlockInfo);
       $httpBackend.when('GET', 'resources/fakeBlockChain.json').respond(fakeChain);
+      $httpBackend.when('GET', 'https://blockexplorer.com/api/block/111').respond(fakeBlock1);
+      $httpBackend.when('GET', 'https://blockexplorer.com/api/block/222').respond(fakeBlock2);
+      $httpBackend.when('GET', 'https://blockexplorer.com/api/block/333').respond(fakeBlock3);
+
       ctrl = $controller('BlockTableController');
     }));
 
@@ -33,16 +54,34 @@ describe('blockTable module', function() {
     });
 
     it('should store the latestBlock info when instantiated', function() {
-      expect(ctrl.latestBlock).toBeUndefined();
+      expect(ctrl.latestBlockHash).toBeUndefined();
       $httpBackend.flush();
-      expect(ctrl.latestBlock).toEqual("0000000000000000040fbb7c8bf00ea03aee212db5b844bbe9272b468c796618")
+      expect(ctrl.latestBlockHash).toEqual("111")
     });
 
-    it('blockChain should store an array of block information', function() {
-      expect(ctrl.blockChain).toBeUndefined();
+
+    it('getBlockData should create a list of objects containing the hash,timestamp and height of each block in block chain', function() {
       $httpBackend.flush();
-      fakeChain.blockChain.reverse();
-      expect(ctrl.blockChain).toEqual(fakeChain);
+      var finalChain=ctrl.blockChain;
+      expect(ctrl.blockChain).toEqual(
+      [
+        {
+            "hash":"111",
+            "height":111,
+            "time":111
+        },
+        {
+            "hash":"222",
+            "height":222,
+            "time":222
+        },
+        {
+            "hash":"333",
+            "height":333,
+            "time":333
+        }
+        ]
+      )
     });
 
   });
