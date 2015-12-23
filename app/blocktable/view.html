@@ -28,7 +28,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="block in blockTableCtrl.blockChain| filter:query | limitTo:10:blockTableCtrl.startingIndex">
+                <tr ng-repeat="block in blockTableCtrl.blockChain| filter:query | limitTo:10">
                   <td>{{block.index}}</td>
                   <td>{{block.time}}</td>
                   <td><a href="#/blocktable/detail/{{block.hash}}"> {{block.hash}}</a></td>
@@ -36,7 +36,7 @@
                 </tr>
               </tbody>
             </table>
-            <a class="pointer" ng-show="blockTableCtrl.blockChain.length>20" ng-click="blockTableCtrl.next10()">Previous 10 </a>
+            <a class="pointer" ng-show="blockTableCtrl.blockChain.length>9" ng-click="blockTableCtrl.next10()">Previous 10 </a>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ angular.module("blockTable", ["ngRoute"])
     controller.blockChain=[];
     controller.startingIndex=0;
     controller.currentIndex=1;
+    controller.lastHash;
 
     $http.get('https://blockexplorer.com/api/status?q=getLastBlockHash').success(function(data) {
       controller.latestBlockHash = data.lastblockhash;
@@ -24,8 +25,9 @@ angular.module("blockTable", ["ngRoute"])
           "time": formattedDate,
           "height":data.height
         })
+        controller.lastHash=data.hash;
         controller.currentIndex++;
-        if(!data.previousblockhash){
+        if(controller.blockChain.length >9 || !data.previousblockhash){
           return controller.blockChain;
         }else{
           controller.generateBlockChain(data.previousblockhash)
@@ -34,6 +36,8 @@ angular.module("blockTable", ["ngRoute"])
     }
 
     this.next10=function(){
-      controller.startingIndex+=10
+      controller.startingIndex+=10;
+      controller.blockChain=[];
+      controller.generateBlockChain(controller.lastHash);
     }
 });
