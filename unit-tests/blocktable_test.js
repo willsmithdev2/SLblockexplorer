@@ -66,16 +66,19 @@ describe('blockTable module', function() {
       expect(ctrl.blockChain).toEqual(
       [
         {
+            "index":1,
             "hash":"111",
             "height":111,
             "time":'01/01/1970 12:01AM'
         },
         {
+          "index":2,
             "hash":"222",
             "height":222,
             "time":'01/01/1970 12:03AM'
         },
         {
+          "index":3,
             "hash":"333",
             "height":333,
             "time":'01/01/1970 12:05AM'
