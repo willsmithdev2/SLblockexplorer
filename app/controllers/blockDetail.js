@@ -39,23 +39,29 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               }
           }
 
+
           d3Service.d3().then(function(d3) {
 
-            //Render graph based on 'data'
           scope.render = function(data) {
             if(!(!data)){
               generateLinksAndNodes(data);
 
-              var svg = d3.select(ele[0]).append('svg');
-              svg.style("width", width)
-              svg.style("height", height);
+              var svg = d3.select(ele[0]).append('svg')
+              .attr("width", width)
+              .attr("height", height)
+              .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+              .append("g");
+
+              function zoom() {
+                  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+              }
 
               var force = d3.layout.force()
                   .size([width, height])
                   .nodes(nodes)
                   .links(links);
 
-              force.linkDistance(width/2);
+              force.linkDistance(30);
 
               var link = svg.selectAll('.link')
                   .data(links)
