@@ -75,6 +75,13 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .enter().append('circle')
                   .attr('class', 'node');
 
+              var texts = svg.selectAll("text.label")
+                .data(nodes)
+                .enter().append("text")
+                .attr("class", "label")
+                .attr("fill", "black")
+                .text(function(d) {  return d.hash;  });
+
               force.on('tick', function() {
 
                   node.attr('r', width/100)
@@ -87,7 +94,9 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                       .attr('x2', function(d) { return d.target.x; })
                       .attr('y2', function(d) { return d.target.y; });
 
-
+                  texts.attr("transform", function(d) {
+                      return "translate(" + d.x + "," + d.y + ")";
+                  });
               });
 
               force.start();
