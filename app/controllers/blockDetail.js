@@ -70,7 +70,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
 
               force.on('end', function() {
 
-                  node.attr('r', width/25)
+                  node.attr('r', width/100)
                       .attr('cx', function(d) { return d.x; })
                       .attr('cy', function(d) { return d.y; });
 
