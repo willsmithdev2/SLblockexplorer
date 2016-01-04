@@ -31,7 +31,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               var numOfTxs=data.length;
               for(var i = 0; i < numOfTxs; i++){
                 var obj={source:i,target:i+1};
-                var node={x:width/2,y:i*height/3, hash:data[i]};
+                var node={x:width/3,y:i*height/3, hash:data[i]};
                 nodes.push(node);
                 if(i<numOfTxs-1){
                   links.push(obj);
@@ -42,6 +42,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
           d3Service.d3().then(function(d3) {
 
             function click() {
+              console.log("Called click");
               //reset other elements
               d3.selectAll('.node')
               .style('fill', null)
@@ -96,7 +97,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                 .attr("fill", "black")
                 .text(function(d) {  return d.hash;  });
 
-              force.on('tick', function() {
+              force.on('end', function() {
 
                   node.attr('r', width/100)
                       .attr('cx', function(d) { return d.x; })
