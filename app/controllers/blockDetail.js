@@ -31,7 +31,6 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               var numOfTxs=data.length;
               for(var i = 0; i < numOfTxs; i++){
                 var obj={source:i,target:i+1};
-                console.log("Height "+i*height/3)
                 var node={x:width/2,y:i*height/3, hash:data[i]};
                 nodes.push(node);
                 if(i<numOfTxs-1){
@@ -41,6 +40,20 @@ angular.module("detailedBlock", ["ngRoute","d3"])
           }
 
           d3Service.d3().then(function(d3) {
+
+            function click() {
+              //reset other elements
+              d3.selectAll('.node')
+              .style('fill', null)
+              .attr("r", width/100)
+              //fill in blue
+              d3.select(this).transition()
+              .duration(750)
+              .attr("r", 30)
+             .style("fill", "lightsteelblue");
+
+           }
+
 
           scope.render = function(data) {
             if(!(!data)){
@@ -73,7 +86,8 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               var node = svg.selectAll('.node')
                   .data(nodes)
                   .enter().append('circle')
-                  .attr('class', 'node');
+                  .attr('class', 'node')
+                  .on("click", click);
 
               var texts = svg.selectAll("text.label")
                 .data(nodes)
@@ -95,7 +109,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                       .attr('y2', function(d) { return d.target.y; });
 
                   texts.attr("transform", function(d) {
-                      return "translate(" + d.x + "," + d.y + ")";
+                      return "translate(" + (d.x+35) + "," + d.y + ")";
                   });
               });
 
