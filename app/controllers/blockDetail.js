@@ -31,7 +31,8 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               var numOfTxs=data.length;
               for(var i = 0; i < numOfTxs; i++){
                 var obj={source:i,target:i+1};
-                var emptyObj={};
+                
+                var emptyObj={x:(i+1)*10,y:i+1};
                 nodes.push(emptyObj);
                 if(i<numOfTxs-1){
                   links.push(obj);
@@ -61,7 +62,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .nodes(nodes)
                   .links(links);
 
-              force.linkDistance(30);
+              force.linkDistance(10);
 
               var link = svg.selectAll('.link')
                   .data(links)
@@ -78,8 +79,8 @@ angular.module("detailedBlock", ["ngRoute","d3"])
 
                   node.attr('r', width/100)
                       .attr('cx', function(d) { return d.x; })
-                      .attr('cy', function(d) { return d.y; })
-                      .call(force.drag);
+                      .attr('cy', function(d) { return d.y; });
+
 
                   link.attr('x1', function(d) { return d.source.x; })
                       .attr('y1', function(d) { return d.source.y; })
