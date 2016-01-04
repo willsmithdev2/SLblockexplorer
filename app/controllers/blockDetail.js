@@ -68,11 +68,12 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .enter().append('circle')
                   .attr('class', 'node');
 
-              force.on('end', function() {
+              force.on('tick', function() {
 
                   node.attr('r', width/100)
                       .attr('cx', function(d) { return d.x; })
-                      .attr('cy', function(d) { return d.y; });
+                      .attr('cy', function(d) { return d.y; })
+                      .call(force.drag);
 
                   link.attr('x1', function(d) { return d.source.x; })
                       .attr('y1', function(d) { return d.source.y; })
