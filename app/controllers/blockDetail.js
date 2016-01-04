@@ -19,47 +19,79 @@ angular.module("detailedBlock", ["ngRoute","d3"])
           data:'='
         },
         link: function(scope, ele, attrs) {
+
+          var width = 640,
+          height = 480;
+
+          var nodes = [];
+
+          var links = [];
+
+          var generateLinksAndNodes = function(data){
+              var numOfTxs=data.length;
+              for(var i = 0; i < numOfTxs; i++){
+                var obj={source:i,target:i+1};
+                var emptyObj={};
+                nodes.push(emptyObj);
+                if(i<numOfTxs-1){
+                  links.push(obj);
+                }
+              }
+          }
+
           d3Service.d3().then(function(d3) {
-            var renderTimeout;
-            var svg = d3.select(ele[0]).append('svg');
-            svg.style("width", 500)
-            svg.style("height", 500);
+
+            //Render graph based on 'data'
+          scope.render = function(data) {
+            if(!(!data)){
+              generateLinksAndNodes(data);
+
+              var svg = d3.select(ele[0]).append('svg');
+              svg.style("width", width)
+              svg.style("height", height);
+
+              var force = d3.layout.force()
+                  .size([width, height])
+                  .nodes(nodes)
+                  .links(links);
+
+              force.linkDistance(width/2);
+
+              var link = svg.selectAll('.link')
+                  .data(links)
+                  .enter().append('line')
+                  .attr('class', 'link');
 
 
-            $window.onresize = function() {
-              scope.$apply();
-            };
-            scope.$watch(function() {
-              return angular.element($window)[0].innerWidth;
-            }, function() {
-              scope.render(scope.data);
-            });
+              var node = svg.selectAll('.node')
+                  .data(nodes)
+                  .enter().append('circle')
+                  .attr('class', 'node');
 
+              force.on('end', function() {
 
-            scope.$watch('data', function(newData) {
-              scope.render(newData);
+                  node.attr('r', width/25)
+                      .attr('cx', function(d) { return d.x; })
+                      .attr('cy', function(d) { return d.y; });
+
+                  link.attr('x1', function(d) { return d.source.x; })
+                      .attr('y1', function(d) { return d.source.y; })
+                      .attr('x2', function(d) { return d.target.x; })
+                      .attr('y2', function(d) { return d.target.y; });
+
+              });
+
+              force.start();
+          }
+
+          };
+
+           //Watch 'data' and run scope.render(newVal) whenever it changes
+           //Use true for 'objectEquality' property so comparisons are done on equality and not reference
+            scope.$watch('data', function(){
+                scope.render(scope.data);
             }, true);
 
-            scope.render = function(data) {
-              svg.selectAll('*').remove();
-
-              if (!data) return;
-              if (renderTimeout) clearTimeout(renderTimeout);
-
-              renderTimeout = $timeout(function() {
-              svg.selectAll('rect')
-                .data(data).enter()
-                .append('rect')
-                .attr('height', 20)
-                .attr('width', 20)
-                .attr('x', function(d,i) {
-                    return Math.floor(i % 5) * 100;
-                })
-                .attr('y',  function(d,i) {
-                    return Math.floor(i / 5) * 100;
-                });
-              }, 200);
-            };
           });
         }}
   }]);
