@@ -32,14 +32,13 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               for(var i = 0; i < numOfTxs; i++){
                 var obj={source:i,target:i+1};
                 console.log("Height "+i*height/3)
-                var emptyObj={x:width/2,y:i*height/3};
-                nodes.push(emptyObj);
+                var node={x:width/2,y:i*height/3, hash:data[i]};
+                nodes.push(node);
                 if(i<numOfTxs-1){
                   links.push(obj);
                 }
               }
           }
-
 
           d3Service.d3().then(function(d3) {
 
@@ -63,7 +62,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .links(links);
 
               force.gravity(0);
-              force.linkDistance(140);
+              force.linkDistance(height/3-10);
 
               var link = svg.selectAll('.link')
                   .data(links)
