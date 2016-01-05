@@ -41,20 +41,6 @@ angular.module("detailedBlock", ["ngRoute","d3"])
 
           d3Service.d3().then(function(d3) {
 
-            function click() {
-              console.log("Called click");
-              //reset other elements
-              d3.selectAll('.node')
-              .style('fill', null)
-              .attr("r", width/100)
-              //fill in blue
-              d3.select(this).transition()
-              .duration(750)
-              .attr("r", 30)
-             .style("fill", "lightsteelblue");
-
-           }
-
 
           scope.render = function(data) {
             if(!(!data)){
@@ -96,6 +82,35 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                 .attr("class", "label")
                 .attr("fill", "black")
                 .text(function(d) {  return d.hash;  });
+
+              function click(data) {
+                  console.log("Called click");
+                  //reset other elements
+                  d3.selectAll('.node')
+                  .style('fill', null)
+                  .attr("r", width/100);
+
+                  d3.selectAll('.coinValue')
+                  .remove();
+
+                  //fill in blue
+                  d3.select(this).transition()
+                  .duration(750)
+                  .attr("r", 30)
+                  .style("fill", "lightsteelblue");
+
+                  svg.append("text")
+                  .attr("class", "coinValue")
+                  .attr("fill", "black")
+                  .attr("transform", function(d) {
+
+                      return "translate(" + (data.x-7) + "," + (data.y+2) + ")";
+                  })
+                  .text("25");
+
+
+              }
+
 
               force.on('end', function() {
 

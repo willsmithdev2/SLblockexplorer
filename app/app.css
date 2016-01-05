@@ -11,6 +11,9 @@
   content: "[";
 }
 
+.coinValue {
+  font-size: 12px;
+}
 .node {
     fill: #ccc;
     stroke: #fff;
