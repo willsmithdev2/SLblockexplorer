@@ -42,9 +42,10 @@
             </tbody>
             </table>
             <h2>Transactions</h2>
+            <p>The graph below depicts all of the transactions in this block chained together. Clicking a node will display that transactions value.</p>
             <div class="drawarea" d3-bars data="scoreData"></div>
-            <p>The graph above depicts all of the transactions in this block chained together</p>
 
+            <h3>Table of transactions</h3>
             <table class="table" style="table-layout: fixed">
               <tbody>
               <tr ng-repeat="tx in detailedCtrl.currentBlock.tx | filter:query">

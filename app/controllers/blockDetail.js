@@ -62,7 +62,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .links(links);
 
               force.gravity(0);
-              force.linkDistance(height/3-10);
+              force.linkDistance(height/3-20);
 
               var link = svg.selectAll('.link')
                   .data(links)
