@@ -41,20 +41,21 @@ angular.module("detailedBlock", ["ngRoute","d3"])
 
           d3Service.d3().then(function(d3) {
 
+         //Watch 'data' and run scope.render whenever it changes
+          scope.$watch('data', function(){
+              scope.render(scope.data);
+          }, true);
 
           scope.render = function(data) {
             if(!(!data)){
+
               generateLinksAndNodes(data);
 
               var svg = d3.select(ele[0]).append('svg')
               .attr("width", width)
               .attr("height", height)
-              .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+              .call(d3.behavior.zoom().scaleExtent([0.5, 8]).on("zoom", zoom))
               .append("g");
-
-              function zoom() {
-                  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-              }
 
               var force = d3.layout.force()
                   .size([width, height])
@@ -83,39 +84,6 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                 .attr("fill", "black")
                 .text(function(d) {  return d.hash;  });
 
-              function click(data) {
-                  console.log("Called click");
-                  //reset other elements
-                  d3.selectAll('.node')
-                  .style('fill', null)
-                  .attr("r", width/100);
-
-                  d3.selectAll('.coinValue')
-                  .remove();
-
-                  //fill in blue
-                  d3.select(this).transition()
-                  .duration(750)
-                  .attr("r", 30)
-                  .style("fill", "lightsteelblue");
-
-
-
-                  $http.get('https://blockexplorer.com/api/tx/'+data.hash).success(function(txResult) {
-                    svg.append("text")
-                    .attr("class", "coinValue")
-                    .attr("fill", "black")
-                    .attr("transform", function(d) {
-
-                        return "translate(" + (data.x-7) + "," + (data.y+2) + ")";
-                    })
-                    .text(Math.round(txResult.valueOut*10)/100);
-                  });
-
-
-              }
-
-
               force.on('end', function() {
 
                   node.attr('r', width/100)
@@ -134,16 +102,42 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               });
 
               force.start();
+
+
+              function zoom() {
+                  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+              }
+
+
+              function click(data) {
+                  console.log("Called click");
+                  //reset other elements
+                  d3.selectAll('.node')
+                  .style('fill', null)
+                  .attr("r", width/100);
+
+                  d3.selectAll('.coinValue')
+                  .remove();
+
+                  //fill in blue
+                  d3.select(this).transition()
+                  .duration(750)
+                  .attr("r", 30)
+                  .style("fill", "lightsteelblue");
+
+                  $http.get('https://blockexplorer.com/api/tx/'+data.hash).success(function(txResult) {
+                    svg.append("text")
+                    .attr("class", "coinValue")
+                    .attr("fill", "black")
+                    .attr("transform", function(d) {
+
+                        return "translate(" + (data.x-7) + "," + (data.y+2) + ")";
+                    })
+                    .text(Math.round(txResult.valueOut*10)/100);
+                  });
+              }
+            }
           }
-
-          };
-
-           //Watch 'data' and run scope.render(newVal) whenever it changes
-           //Use true for 'objectEquality' property so comparisons are done on equality and not reference
-            scope.$watch('data', function(){
-                scope.render(scope.data);
-            }, true);
-
           });
         }}
   }]);
