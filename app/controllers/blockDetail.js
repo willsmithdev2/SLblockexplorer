@@ -71,9 +71,14 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .attr('class', 'link');
 
 
-              var node = svg.selectAll('.node')
+              var node = svg.selectAll('g.node')
                   .data(nodes)
-                  .enter().append('circle')
+                  .enter()
+                  .append("g")
+                  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+
+                  node.append("circle")
                   .attr('class', 'node')
                   .on("click", click);
 
@@ -81,22 +86,21 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                 .data(nodes)
                 .enter().append("text")
                 .attr("class", "label")
-                .attr("fill", "black")
-                .text(function(d) {  return d.hash;  });
+                .attr("fill", "black");
+
 
               force.on('end', function() {
 
-                  node.attr('r', width/100)
-                      .attr('cx', function(d) { return d.x; })
-                      .attr('cy', function(d) { return d.y; });
-
+                  node.selectAll(".node")
+                      .attr('r', width/100);
 
                   link.attr('x1', function(d) { return d.source.x; })
                       .attr('y1', function(d) { return d.source.y; })
                       .attr('x2', function(d) { return d.target.x; })
                       .attr('y2', function(d) { return d.target.y; });
 
-                  texts.attr("transform", function(d) {
+                  texts.text(function(d) {  return d.hash;  })
+                  .attr("transform", function(d) {
                       return "translate(" + (d.x+35) + "," + d.y + ")";
                   });
               });
@@ -110,13 +114,12 @@ angular.module("detailedBlock", ["ngRoute","d3"])
 
 
               function click(data) {
-                  console.log("Called click");
                   //reset other elements
                   d3.selectAll('.node')
                   .style('fill', null)
                   .attr("r", width/100);
 
-                  d3.selectAll('.coinValue')
+                  node.selectAll('.coinValue')
                   .remove();
 
                   //fill in blue
@@ -126,13 +129,11 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .style("fill", "lightsteelblue");
 
                   $http.get('https://blockexplorer.com/api/tx/'+data.hash).success(function(txResult) {
-                    svg.append("text")
+                    node.filter(function (o) {return o.index === data.index;})
+                    .append("text")
                     .attr("class", "coinValue")
                     .attr("fill", "black")
-                    .attr("transform", function(d) {
-
-                        return "translate(" + (data.x-7) + "," + (data.y+2) + ")";
-                    })
+                    .attr("text-anchor", "middle")
                     .text(Math.round(txResult.valueOut*10)/100);
                   });
               }
