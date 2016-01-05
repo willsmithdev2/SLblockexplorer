@@ -11,8 +11,8 @@ angular.module("detailedBlock", ["ngRoute","d3"])
       $scope.scoreData=data.tx;
     });
   }])
-  .directive('d3Bars', ['$window', '$timeout', 'd3Service',
-    function($window, $timeout, d3Service) {
+  .directive('d3Bars', ['$window', '$timeout', 'd3Service', "$http",
+    function($window, $timeout, d3Service,$http) {
       return {
         restrict: 'EA',
         scope: {
@@ -99,14 +99,18 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .attr("r", 30)
                   .style("fill", "lightsteelblue");
 
-                  svg.append("text")
-                  .attr("class", "coinValue")
-                  .attr("fill", "black")
-                  .attr("transform", function(d) {
 
-                      return "translate(" + (data.x-7) + "," + (data.y+2) + ")";
-                  })
-                  .text("25");
+
+                  $http.get('https://blockexplorer.com/api/tx/'+data.hash).success(function(txResult) {
+                    svg.append("text")
+                    .attr("class", "coinValue")
+                    .attr("fill", "black")
+                    .attr("transform", function(d) {
+
+                        return "translate(" + (data.x-7) + "," + (data.y+2) + ")";
+                    })
+                    .text(Math.round(txResult.valueOut*10)/100);
+                  });
 
 
               }
