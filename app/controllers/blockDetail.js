@@ -101,7 +101,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
 
                   texts.text(function(d) {  return d.hash;  })
                   .attr("transform", function(d) {
-                      return "translate(" + (d.x+35) + "," + d.y + ")";
+                      return "translate(" + (d.x+30) + "," + (d.y) + ")";
                   });
               });
 

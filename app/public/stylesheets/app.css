@@ -16,8 +16,8 @@
   font-size: 12px; }
 
 .node {
-  fill: #ccc;
-  stroke: #fff;
+  fill: green;
+  stroke: grey;
   stroke-width: 2px; }
 
 .link {

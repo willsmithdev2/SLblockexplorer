@@ -18,9 +18,13 @@
 .coinValue {
   font-size: 12px;
 }
+
+$node-colour:green ;
+$node-outline-colour:grey ;
+
 .node {
-    fill: #ccc;
-    stroke: #fff;
+    fill: $node-colour;
+    stroke: $node-outline-colour;
     stroke-width: 2px;
 }
 

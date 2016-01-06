@@ -5,3 +5,6 @@ bower_components/
 tmp
 .DS_Store
 .idea
+.sass*
+**/.sass-cache/
+.sass-cache/
