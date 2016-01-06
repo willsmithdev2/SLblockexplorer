@@ -95,7 +95,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                       .attr('r', width/100);
 
                   link.attr('x1', function(d) { return d.source.x; })
-                      .attr('y1', function(d) { return d.source.y-13; })
+                      .attr('y1', function(d) { return d.source.y-80; })
                       .attr('x2', function(d) { return d.target.x; })
                       .attr('y2', function(d) { return d.target.y+13; });
 
