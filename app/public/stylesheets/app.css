@@ -1,20 +1,4 @@
 /* app css stylesheet */
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em; }
-
-.menu:before {
-  content: "["; }
-
-.loadingText {
-  text-align: center;
-  vertical-align: middle; }
-
-.coinValue {
-  font-size: 12px; }
-
 .node {
   fill: green;
   stroke: grey;
@@ -23,6 +7,27 @@
 .link {
   stroke: #777;
   stroke-width: 2px; }
+
+.coinValue {
+  font-size: 12px; }
+
+.loadingText {
+  text-align: center;
+  vertical-align: middle; }
+
+.drawarea {
+  border: 1px solid black;
+  width: 640px;
+  height: 480px; }
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em; }
+
+.menu:before {
+  content: "["; }
 
 .menu:after {
   content: "]"; }
@@ -51,11 +56,6 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px; }
-
-.drawarea {
-  border: 1px solid black;
-  width: 640px;
-  height: 480px; }
 
 /*
  * Global add-ons

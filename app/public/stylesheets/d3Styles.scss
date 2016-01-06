@@ -1,0 +1,32 @@
+
+$node-colour:green ;
+$node-outline-colour:grey ;
+
+.node {
+    fill: $node-colour;
+    stroke: $node-outline-colour;
+    stroke-width: 2px;
+}
+
+.link {
+    stroke: #777;
+    stroke-width: 2px;
+}
+
+
+.coinValue {
+  font-size: 12px;
+}
+
+.loadingText {
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+
+.drawarea{
+  border:1px solid black;
+  width:640px;
+  height:480px;
+}
