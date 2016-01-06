@@ -31,7 +31,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               var numOfTxs=data.length;
               for(var i = 0; i < numOfTxs; i++){
                 var obj={source:i,target:i+1};
-                var node={x:width/3,y:i*height/3, hash:data[i]};
+                var node={x:(width/2) ,y:i*100, hash:data[i]};
                 nodes.push(node);
                 if(i<numOfTxs-1){
                   links.push(obj);
@@ -63,8 +63,8 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .links(links);
 
               force.gravity(0);
-              force.linkDistance(height/3);
-            
+              force.linkDistance(100);
+
 
               var link = svg.selectAll('.link')
                   .data(links)
@@ -74,13 +74,10 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               var node = svg.selectAll('g.node')
                   .data(nodes)
                   .enter()
-                  .append("g")
-                  .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+                  .append("g");
 
+              //force.charge(-50)
 
-              node.append("circle")
-              .attr('class', 'node')
-              .on("click", click);
 
 
               var texts = node.append("text")
@@ -89,9 +86,13 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                 .attr("text-anchor", "middle");
 
               force.on('end', function() {
+                  node.append("circle")
+                  .attr('class', 'node')
+                  .on("click", click);
 
+                  node.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
                   node.selectAll(".node")
-                      .attr('r', width/100);
+                  .attr('r', width/100);
 
                   link.attr('x1', function(d) { return d.source.x; })
                       .attr('y1', function(d) { return d.source.y; })
