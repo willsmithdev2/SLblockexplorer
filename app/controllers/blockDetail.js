@@ -63,7 +63,8 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .links(links);
 
               force.gravity(0);
-              force.linkDistance(height/3-20);
+              force.linkDistance(height/3);
+            
 
               var link = svg.selectAll('.link')
                   .data(links)
@@ -74,7 +75,7 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                   .data(nodes)
                   .enter()
                   .append("g")
-                  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+                  .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
 
 
               node.append("circle")
@@ -82,12 +83,10 @@ angular.module("detailedBlock", ["ngRoute","d3"])
               .on("click", click);
 
 
-              var texts = svg.selectAll("text.label")
-                .data(nodes)
-                .enter().append("text")
+              var texts = node.append("text")
                 .attr("class", "label")
-                .attr("fill", "black");
-
+                .attr("fill", "black")
+                .attr("text-anchor", "middle");
 
               force.on('end', function() {
 
@@ -95,13 +94,13 @@ angular.module("detailedBlock", ["ngRoute","d3"])
                       .attr('r', width/100);
 
                   link.attr('x1', function(d) { return d.source.x; })
-                      .attr('y1', function(d) { return d.source.y-80; })
+                      .attr('y1', function(d) { return d.source.y; })
                       .attr('x2', function(d) { return d.target.x; })
-                      .attr('y2', function(d) { return d.target.y+13; });
+                      .attr('y2', function(d) { return d.target.y; });
 
                   texts.text(function(d) {  return d.hash;  })
                   .attr("transform", function(d) {
-                      return "translate(" + (d.x+30) + "," + (d.y) + ")";
+                      return "translate(" + (220) + "," + (0) + ")";
                   });
               });
 
