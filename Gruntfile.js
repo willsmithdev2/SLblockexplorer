@@ -12,18 +12,7 @@ module.exports = function(grunt) {
         dest: 'build/<%= pkg.name %>.min.js'
       }
     },
-    concat: {
-      options: {},
-      dist: {
-        files: {
-          'public/js/app.js': [
-             'src/js/**/*.js',
-             '!unit-tests/**/*.js'
-           ]
-        }
-      }
-    },
-
+    
     karma: {
       unit: {
         options: {
