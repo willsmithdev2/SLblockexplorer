@@ -27,7 +27,8 @@ define([], function() {
           }
         }
 
-        function click(allNodes,currentNodeData,circleSVG) {
+
+        function enlargeNodeAndGetTxValue(allNodes,currentNodeData,circleSVG) {
           //reset other elements
           allNodes.selectAll('.node')
           .style('fill', null)
@@ -97,7 +98,7 @@ define([], function() {
               force.on('end', function() {
                 node.append("circle")
                 .attr('class', 'node')
-                .on("click", function(currentNodeData) {click(node,currentNodeData,this);});
+                .on("click", function(currentNodeData) {enlargeNodeAndGetTxValue(node,currentNodeData,this);});
 
                 node.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
                 node.selectAll(".node")
