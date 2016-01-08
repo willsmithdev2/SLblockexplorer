@@ -27,6 +27,31 @@ define([], function() {
           }
         }
 
+        function click(allNodes,currentNodeData,circleSVG) {
+          //reset other elements
+          allNodes.selectAll('.node')
+          .style('fill', null)
+          .attr("r", width/100);
+
+          allNodes.selectAll('.coinValue')
+          .remove();
+
+          //fill in blue
+          d3.select(circleSVG).transition()
+          .duration(750)
+          .attr("r", 30)
+          .style("fill", "lightsteelblue");
+
+          $http.get('https://blockexplorer.com/api/tx/'+currentNodeData.hash).success(function(txResult) {
+            allNodes.filter(function (o) {return o.index === currentNodeData.index;})
+            .append("text")
+            .attr("class", "coinValue")
+            .attr("fill", "black")
+            .attr("text-anchor", "middle")
+            .text(Math.round(txResult.valueOut*10)/100);
+          });
+        }
+
         d3Service.d3().then(function(d3) {
 
           //Watch 'data' and run scope.render whenever it changes
@@ -72,7 +97,7 @@ define([], function() {
               force.on('end', function() {
                 node.append("circle")
                 .attr('class', 'node')
-                .on("click", click);
+                .on("click", function(currentNodeData) {click(node,currentNodeData,this);});
 
                 node.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
                 node.selectAll(".node")
@@ -94,31 +119,6 @@ define([], function() {
 
               function zoom() {
                 svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-              }
-              
-              function click(data) {
-                //reset other elements
-                d3.selectAll('.node')
-                .style('fill', null)
-                .attr("r", width/100);
-
-                node.selectAll('.coinValue')
-                .remove();
-
-                //fill in blue
-                d3.select(this).transition()
-                .duration(750)
-                .attr("r", 30)
-                .style("fill", "lightsteelblue");
-
-                $http.get('https://blockexplorer.com/api/tx/'+data.hash).success(function(txResult) {
-                  node.filter(function (o) {return o.index === data.index;})
-                  .append("text")
-                  .attr("class", "coinValue")
-                  .attr("fill", "black")
-                  .attr("text-anchor", "middle")
-                  .text(Math.round(txResult.valueOut*10)/100);
-                });
               }
             }
           }
