@@ -53,6 +53,10 @@ define([], function() {
           });
         }
 
+        function zoom(svg) {
+          svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        }
+
         d3Service.d3().then(function(d3) {
 
           //Watch 'data' and run scope.render whenever it changes
@@ -68,7 +72,7 @@ define([], function() {
               var svg = d3.select(ele[0]).append('svg')
               .attr("width", width)
               .attr("height", height)
-              .call(d3.behavior.zoom().scaleExtent([0.5, 8]).on("zoom", zoom))
+              .call(d3.behavior.zoom().scaleExtent([0.5, 8]).on("zoom", function() {zoom(svg)}))
               .append("g");
 
               var force = d3.layout.force()
@@ -78,7 +82,6 @@ define([], function() {
 
               force.gravity(0);
               force.linkDistance(100);
-
 
               var link = svg.selectAll('.link')
               .data(links)
@@ -116,19 +119,12 @@ define([], function() {
               });
 
               force.start();
-
-
-              function zoom() {
-                svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-              }
             }
           }
         });
       }
     }
   }
-
-
 
   D3Directive.$inject=['$window', '$timeout','$http', 'd3Service'];
   return D3Directive;
