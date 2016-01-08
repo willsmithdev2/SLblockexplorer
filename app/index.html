@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" ng-app="blockExplorer" class="no-js">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,15 +29,7 @@
 
   <div ng-view></div>
 
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="app.js"></script>
-  <script src="controllers/blockTable.js"></script>
-    <script src="controllers/blockDetail.js"></script>
-
-    <!-- data-main attribute tells require.js to load
-            scripts/main.js after require.js loads. -->
-       <script data-main="app.js" src="scripts/require.js"></script>
+  <script data-main="require-config" src="../node_modules/requirejs/require.js"></script>
 </body>
 
     <script>window.jQuery || document.write('<script src="../node_modules/bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>

@@ -1,16 +1,24 @@
 'use strict';
 
-var app=angular.module('blockExplorer', ['ngRoute', "blockTable","detailedBlock"]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/blocktable', {
-    templateUrl: 'views/blockTable.html',
-    controller: 'BlockTableController',
-    controllerAs:"blockTableCtrl"
-  })
-  .when('/blocktable/detail/:blockid',{
-    templateUrl:"views/blockDetail.html",
-    controller:"DetailedBlockController",
-    controllerAs:"detailedCtrl"
-  })
-  .otherwise({redirectTo: '/blocktable'});
-}]);
+define([
+	'angular',
+	'angularRoute',
+	'block-detail/module',
+	'block-table/module'
+], function(angular, angularRoute, BlockDetailController, BlockTableController) {
+
+	return angular.module('blockExplorer', [
+		'ngRoute',
+		'BlockDetailModule',
+		'BlockTableModule'
+	]).
+  config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/blocktable', {
+      template: "<block-table></block-table>"
+    })
+    .when('/blocktable/detail/:blockid',{
+			template: "<block-detail></block-detail>"
+    })
+    .otherwise({redirectTo: '/blocktable'});
+	}]);
+});

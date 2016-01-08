@@ -1,8 +1,5 @@
-
-
-angular.module("blockTable", ["ngRoute"])
-.controller('BlockTableController',  function($filter, $http) {
-
+define([], function() {
+  function BlockTableController($http,$filter) {
     var controller=this;
     controller.latestBlockHash;
     controller.blockChain=[];
@@ -40,4 +37,9 @@ angular.module("blockTable", ["ngRoute"])
       controller.blockChain=[];
       controller.generateBlockChain(controller.lastHash);
     }
+  }
+
+  BlockTableController.$inject=['$http','$filter'];
+
+  return BlockTableController;
 });

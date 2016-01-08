@@ -22,21 +22,21 @@
             <tbody>
             <tr>
             <td><strong translate=""><span class="ng-scope">Number Of Transactions</span></strong></td>
-              <td class="text-right text-muted ng-binding">{{detailedCtrl.currentBlock.tx.length}}</td>
+              <td class="text-right text-muted ng-binding">{{blockDetailCtrl.currentBlock.tx.length}}</td>
             </tr>
             <tr>
               <td><strong translate=""><span class="ng-scope">Height</span></strong></td>
-              <td class="text-right text-muted ng-binding">{{detailedCtrl.currentBlock.height}}
+              <td class="text-right text-muted ng-binding">{{blockDetailCtrl.currentBlock.height}}
               </td>
             </tr>
             <tr>
               <td><strong translate=""><span class="ng-scope">Timestamp</span></strong></td>
-              <td class="text-right text-muted ng-binding">{{detailedCtrl.currentBlock.time*1000 | date:"dd/MM/yyyy HH:mm:ss"}}</td>
+              <td class="text-right text-muted ng-binding">{{blockDetailCtrl.currentBlock.time*1000 | date:"dd/MM/yyyy HH:mm:ss"}}</td>
             </tr>
             <tr>
               <td><strong>Merkle Root</strong></td>
                 <td class="text-right text-muted">
-                  <span>{{detailedCtrl.currentBlock.merkleroot}}</span>
+                  <span>{{blockDetailCtrl.currentBlock.merkleroot}}</span>
                 </td>
             </tr>
             </tbody>
@@ -48,7 +48,7 @@
             <h3>Table of transactions</h3>
             <table class="table" style="table-layout: fixed">
               <tbody>
-              <tr ng-repeat="tx in detailedCtrl.currentBlock.tx | filter:query">
+              <tr ng-repeat="tx in blockDetailCtrl.currentBlock.tx | filter:query">
                 <td class="text-left text-muted ng-binding">{{tx}}</td>
               </tr>
               </tbody>
