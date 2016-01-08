@@ -18,7 +18,8 @@
 .drawarea {
   border: 1px solid black;
   width: 640px;
-  height: 480px; }
+  height: 480px;
+  display: block; }
 
 .menu {
   list-style: none;

@@ -2,9 +2,9 @@ define([], function() {
 
   function D3Directive($window, $timeout, $http,d3Service) {
     return {
-      restrict :'A',
+      restrict: 'E',
       scope: {
-        data:'='
+        data:'=',
       },
       link: function(scope, ele, attrs) {
 
@@ -26,7 +26,6 @@ define([], function() {
             }
           }
         }
-
 
         function enlargeNodeAndGetTxValue(allNodes,currentNodeData,circleSVG) {
           //reset other elements
