@@ -85,23 +85,23 @@ define([], function() {
               .enter().append('line')
               .attr('class', 'link');
 
-              var node = svg.selectAll('g.node')
+              var allNodes = svg.selectAll('g.node')
               .data(nodes)
               .enter()
               .append("g");
 
-              var texts = node.append("text")
+              var texts = allNodes.append("text")
               .attr("class", "label")
               .attr("fill", "black")
               .attr("text-anchor", "middle");
 
               force.on('end', function() {
-                node.append("circle")
+                allNodes.append("circle")
                 .attr('class', 'node')
-                .on("click", function(currentNodeData) {enlargeNodeAndGetTxValue(node,currentNodeData,this);});
+                .on("click", function(currentNodeData) {enlargeNodeAndGetTxValue(allNodes,currentNodeData,this);});
 
-                node.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
-                node.selectAll(".node")
+                allNodes.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+                allNodes.selectAll(".node")
                 .attr('r', width/100);
 
                 link.attr('x1', function(d) { return d.source.x; })
