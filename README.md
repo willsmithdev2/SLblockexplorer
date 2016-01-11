@@ -9,6 +9,8 @@
   <li>Install node</li>
   <li>Install bootstrap (npm install bootstrap)</li>
   <li>Run 'npm start' on cmd</li>
+  <li>In another terminal clone https://github.com/willsmithdev2/SLBitcoin </li>
+  <li>cd into this directory and run node server.js. <-- This provides a the check hash function</li>
   <li>Navigate to http://localhost:8000/app/index.html#/blocktable</li>
 </ul>
 
